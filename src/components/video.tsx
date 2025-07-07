@@ -2,6 +2,10 @@ import { useEffect, useRef } from "react";
 import videojs from "video.js";
 import 'video.js/dist/video-js.css';
 import { type videoJsOptionsType } from "../App";
+import "videojs-contrib-quality-levels" //handle quality levels
+import "videojs-http-source-selector" //add quality selector UI
+
+
 
 interface VideoJsProps {
   options: videoJsOptionsType;
@@ -16,7 +20,7 @@ function VideoJs({ options, onReady }: VideoJsProps) {
     if (!videoRef.current) return;
 
     if (!playerRef.current) {
-      const videoElement = document.createElement("video-js");
+      const videoElement = document.createElement("video");
 
       videoElement.classList.add("vjs-big-play-centered", "video-js");
       videoRef.current.appendChild(videoElement);
@@ -27,8 +31,17 @@ function VideoJs({ options, onReady }: VideoJsProps) {
         () => {
           videojs.log("player is ready");
           onReady?.(player);
+        }));
+
+        // ABS
+        if(typeof player.httpSourceSelector === "function"){
+          player.httpSourceSelector({
+            default:"auto" //choose quality auto
+          })
+          playerRef.current = player
         }
-      ));
+
+
     } else {
       const player = playerRef.current;
 
