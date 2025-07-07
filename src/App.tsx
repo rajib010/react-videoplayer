@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import VideoJs from "./components/video";
+import ImagekitPlayer from "./components/imagekit-player";
 
 export type videoJsOptionsType = {
   autoplay: boolean;
@@ -83,7 +84,8 @@ function App() {
 
   return (
     <div className="container">
-      <VideoJs options={videoJsOptions} onReady={handlePlayerReady} />
+      {/* <VideoJs options={videoJsOptions} onReady={handlePlayerReady} /> */}
+      <ImagekitPlayer />
     </div>
   );
 }
